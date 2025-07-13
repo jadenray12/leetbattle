@@ -1,13 +1,14 @@
-name: Run Tests on Pull Request
+name: Run Backend Tests on Pull Request
 
 on:
-  pull_request:        # runs on every PR
-    branches: [ main ] # or whatever your default branch is
+  pull_request:
+    branches: [ main ]
   push:
-    branches: [ main ] # optional, runs on direct pushes too
+    branches: [ main ]
 
+    
 jobs:
-  test:
+  backend-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +18,12 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18' # or whatever version you're using
+        node-version: '18'
 
-    - name: Install dependencies
+    - name: Install backend dependencies
+      working-directory: ./backend
       run: npm install
 
-    - name: Run tests
+    - name: Run backend tests
+      working-directory: ./backend
       run: npm test
