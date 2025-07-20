@@ -1,4 +1,10 @@
+require("dotenv").config()
+
 const userService = require('../services/userService.js');
+const jwt = require('jsonwebtoken');
+
+
+
 
 exports.registerUser = async (req, res) => {
   try {
@@ -14,11 +20,14 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const {username, password} = req.body;
+      const {username, password} = req.body;
+      const user = await userService.login(username, password);
 
-
+      const jwtUser = {username}
+      const token = jwt.sign(jwtUser, process.env.ACCESS_TOKEN_SECRET)
+      res.status(201).json({"accessToken": token});
 
     } catch (err) {
-        res.status(400).json({error: message})
+      res.status(400).json({error: err.message})
     }
 };

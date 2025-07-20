@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const userRoutes = require('./routes/userRoutes');
+const roomRoutes = require('./routes/roomRoutes')
 const app = express()
 
 
@@ -13,6 +14,9 @@ app.get('/api/hi', (req,res) => {
 
 
 app.use('/api/users', userRoutes);
+
+
+app.use('/api/rooms', roomRoutes);
 
 
 

@@ -16,3 +16,24 @@ exports.register = async (username, password) => {
     return {"message": " Registration successful"};
 
 }
+
+
+exports.login = async (username, password) => {
+    
+    const user = await User.findOne({username});
+
+    if (!user) {
+        throw new Error('Login Failed. Username or Password is Incorrect');
+    }
+
+
+    const check = await bcrypt.compare(password, user.password);
+
+
+    if (check) {
+        return {"message" : "Login successful"};
+    } else {
+        throw new Error('Login Failed. Username or Password is Incorrect');
+    }
+
+}
